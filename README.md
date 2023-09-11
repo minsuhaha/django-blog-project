@@ -2,6 +2,7 @@
 
 ## 프로젝트 개요
  - django 와 AI를 활용해 자동완성 기능이 존재하는 블로그를 만들어 보자! 오르미 2기 블만조 블로그 프로젝트 입니다.
+ - clone > python -m venv myvenv > pip install -r requirement.txt > password.json 작성
 
 ## 프로젝트 노션 페이지
  - https://smart-bill-194.notion.site/f675a118e3b34333990f1732e248d4e4?pvs=4
