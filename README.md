@@ -6,6 +6,9 @@
 ## 프로젝트 노션 페이지
  - https://www.notion.so/f675a118e3b34333990f1732e248d4e4?pvs=4
 
+## 프로젝트 피그마
+ - https://www.figma.com/file/9GMksH05GZAejl3UewASNd/%EC%98%A4%EB%A5%B4%EB%AF%B8-2%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8(%EB%B8%94%EB%A1%9C%EA%B7%B8)-(Copy)?type=design&node-id=0-1&mode=design&t=CCql6XVRzchHDHFy-0
+
 ## 프로젝트 조원
  - Leader : 하민수
  - 그외 : 김채홍, 최문정, 허승범
