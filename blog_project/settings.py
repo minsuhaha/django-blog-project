@@ -81,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'blog_db', # 데이터베이스 이름
-        'USER': 'postgres',
+        'USER': 'blog_project_user',
         'PASSWORD': secrets['postgresql_password'],
-        'HOST': 'localhost',
+        'HOST': secrets['IP'],
         'PORT': '5432'
     }
 }
