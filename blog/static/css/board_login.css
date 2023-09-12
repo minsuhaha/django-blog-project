@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F9F8F4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+.container {
+    width: 250px;
+    padding: 40px;
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin-bottom: 30px; /* 위 아래 간격을 20px로 조정 */
+
+    border: none; /* 기존의 테두리 제거 */
+    border-bottom: 1px solid #CAC8C5; 
+
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #CAC8C5;
+    background-color: transparent;
+}
+
+
+button {
+    display: flex;
+    width: 200px;
+    padding: 11px 82px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    background: #1E1E1E;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #333;
+}

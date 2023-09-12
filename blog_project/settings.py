@@ -41,8 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # apps
     'blog',
+
+    # ckeditor
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+# ckeditor 설정
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow" 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,8 +93,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'blog_db', # 데이터베이스 이름
         'USER': 'blog_project_user',
-        'PASSWORD': secrets['postgresql_password'],
-        'HOST': secrets['IP'],
+        'PASSWORD': secrets["postgresql_password"],
+        'HOST': secrets["IP"],
         'PORT': '5432'
     }
 }
@@ -125,6 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# media 파일 설정 세팅
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

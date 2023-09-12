@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/board_login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <!-- 아이디 입력 -->
+            {% comment %} <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }} {% endcomment %}
+            <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" placeholder="username">
+
+            <!-- 비밀번호 입력 -->
+            {% comment %} <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }} {% endcomment %}
+            <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" placeholder="password">
+            
+            <!-- 로그인 제출 -->
+            <button type="submit" style="display: block; margin: 0 auto;">Login</button>
+            
+            <!-- 아이디 잘못 입력했을 시 오류-->
+            {% if form.username.errors %}
+            <p style="color: red;">{{ form.username.errors }}</p>
+            {% endif %}
+            
+             <!-- 비밀번호 잘못 입력했을 시 오류-->
+            {% if form.password.errors %}
+            <p style="color: red;">{{ form.password.errors }}</p>
+            {% endif %}
+            
+            <!-- 아이디나 비밀번호 둘중 하나라도 입력을 하지 않았을 시 오류-->
+            {% if form.non_field_errors %}
+            <p style="color: red;">{{ form.non_field_errors }}</p>
+            {% endif %}
+        </form>
+        
+    </div>
+</body>
+</html>
