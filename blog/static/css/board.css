@@ -1,0 +1,18 @@
+header{
+    background-color: black;
+    color: white;
+}
+
+main{
+    background-color: #F9F8F4;;
+}
+
+footer{
+    background-color: #E7E3DA;
+}
+
+header button{
+    border-radius: 2px;
+    background-color: #3A3A3A;
+    color: white;
+}
