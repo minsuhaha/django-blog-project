@@ -14,7 +14,7 @@ def board_write(request):
             form = form.save(commit=False)
             form.writer = request.user  # 현재 로그인한 사용자를 작성자로 설정
             form.save()
-            return redirect('board_list')  # 성공 시 홈 페이지로 리디렉션
+            return redirect('board')  # 성공 시 홈 페이지로 리디렉션
     else:
         form = BlogForm()
     return render(request, 'board_write.html', {'form': form})
@@ -26,7 +26,7 @@ def board_login(request):
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('board_list')  # 로그인 성공 시 리디렉션할 페이지
+            return redirect('board')  # 로그인 성공 시 리디렉션할 페이지
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
