@@ -1,25 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>글쓰기</title>
+    <link rel="stylesheet" href="../static/css/board_write.css">
 </head>
+
 <body>
     <!-- 네비게이션 바 -->
-    {% include "nav_white.html" %}
-
-    <div class = "container">
-        <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.media}}    
-        {{form.as_p}}
-        <br>
-            <input class="btn btn dark" type="submit" value="제출하기">
-        </form>
+    <div class="nav">
+        {% include "nav_white.html" %}
     </div>
+
+    <!-- 글쓰기-->
+    <div class="container">
+        <div class="content">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}
+                <br>
+                <input class="btn btn dark" type="submit" value="제출하기">
+            </form>
+        </div>
+    </div>
+
+    <!-- Ai글 자동완성-->
+    <div class="ai">
+        AI 글 자동완성
+    </div>
+    <!--업로드 인포-->
+    <div class="upload_info">
+        <div>
+            <p id="upload_info">UPLOAD INFO</p>
+            상태 :
+        </div>
+        <a href="" id="img_upload"> 이미지업로드</a>
+        <button>임시저장</button>
+        <button>글 작성</button>
+    </div>
+
 </body>
-</html> 
 
-
+</html>
