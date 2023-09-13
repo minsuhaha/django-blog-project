@@ -27,7 +27,7 @@
                 <div class="row-box">
                     <!-- 로그인/로그아웃 버튼 -->
                     {% if user.is_authenticated %}
-                        <a href="{% url 'logout' %}" class="primary-button logout-button">Logout</a>
+                        <a href="#" class="primary-button logout-button">Logout</a>
                         <a href="{% url 'board_write' %}" class="primary-button create-post-button">Just Write!</a>
                     {% else %}
                         <a href="{% url 'board_login' %}" class="primary-button">Login</a>
