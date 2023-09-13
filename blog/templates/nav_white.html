@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar_white.css' %}">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <!-- 왼쪽 로고와 로고 버튼 -->
+            <a href="{% url 'board' %}" class="logo-link">
+                <img src="{% static 'img/logo_black.svg' %}" alt="" class="bg-logo">
+                <img src="{% static 'img/myLOG_white.png' %}" alt="로고" class="top-logo">
+            </a>
+            
+
+            <!-- 오른쪽 버튼 영역 -->
+            <div class="nav-buttons">
+                <a href="#" class="primary-button">일상</a>
+                <a href="#" class="primary-button">요리</a>
+                <a href="#" class="primary-button">영화</a>
+                <a href="#" class="primary-button">여행</a>
+                <a href="#" class="primary-button">IT</a>
+                <div class="row-box">
+                    <!-- 로그인/로그아웃 버튼 -->
+                    {% if user.is_authenticated %}
+                        <a href="#" class="primary-button logout-button">Logout</a>
+                        <a href="{% url 'board_write' %}" class="primary-button create-post-button">Just Write!</a>
+                    {% else %}
+                        <a href="{% url 'board_login' %}" class="primary-button">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>
