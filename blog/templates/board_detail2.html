@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="../static/css/board_detail2.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="box-divider">
+        <div class="big-box">
+          <div class="post-info">
+            <h5>{{ post.created_at }} | {{ post.views }} 조회</h5>
+            <h1>{{ post.title }}</h1>
+            <h5>by {{ post.author_id }}</h5>
+            <h5 class="topic-box">{{ post.topic }}</h5>
+          </div>
+          <div class="post-content">{{ post.content | safe }}</div>
+        </div>
+        <div class="small-box">
+          <div>
+            <h3>Other posts</br>you may like</h3>
+            {% for recommended_post in recommended_posts %}
+              <div class="recommend-box">
+                <a href="{% url 'blog_app:post_detail' recommended_post.id %}">
+                  {{ recommended_post.image_tag|safe }}
+                  {{ recommended_post.title }}</a>
+                
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="button-box">
+        <div class="box-divider" style="gap:10px">
+            <a href="{% url 'blog_app:create_or_update_post' post.id %}">
+              <button class="edit-button">수정하기</button>
+            </a>
+            <form method="POST" action="{% url 'blog_app:post_detail' post.id %}">
+              <input type="hidden" name="delete-button" value="true">
+              <button type="submit" class="delete-button">삭제하기</button>
+            </form>
+          </div>
+          <button class="share-button">공유하기</button>
+      </div>
+  </body>
+</html>
