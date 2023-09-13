@@ -46,15 +46,17 @@
                     content
                 </div>
             </div>
-
+            
             <!-- 버튼모음 -->
             <div class="third">
+                {% if user.is_authenticated %}
                 <!-- 수정 -->
                 <button>수정하기</button>
                 <!-- 삭제 -->
                 <button>삭제하기</button>
                 <!-- 공유 -->
                 <button>공유하기</button>
+                {% endif %}
             </div>
 
                 <!-- 다음글 이전글 -->

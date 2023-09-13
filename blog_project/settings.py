@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
 
-    #DRF
+    #drf
     'rest_framework'
 ]
 

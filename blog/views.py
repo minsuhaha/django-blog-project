@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout,authenticate
 from .forms import BlogForm
 from .models import Post
 
@@ -31,9 +31,18 @@ def board_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+# 로그아웃 
+def board_logout(request):
+    logout(request)
+    return redirect('board')
 
-
-# Create your views here.
+# 메인 페이지
 def board(request):
     posts = Post.objects.all().order_by('-create_date')
-    return render(request, 'board.html', {'posts': posts})
+    title_post = Post.objects.order_by('-view').first()
+    return render(request, 'board.html', {'posts': posts ,'title_post':title_post})
+
+# 상세 페이지
+def board_detail(request,id):
+    post_detail = Post.objects.filter('id' == id)
+    return render(request, 'board_detail.html')
