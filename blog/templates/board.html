@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/board.css' %}" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        여기 네이게이션바
+    </nav>
+    <header>   
+        <h1>Lorem ipsum dolor</h1>
+        <h>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</h>
+        <div><button>READ MORE</button></div>
+        <img src = "{% static 'css/1.png' %}">
+    </header>
+    <main>
+        <div class="card">
+            {% for post in posts %}
+                {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
+                <div><h>{{post.create_date}}</h></div> <!--작성 시간-->
+                <h3>{{post.title}}</h3> <!-- 게시글 제목 -->
+                <h>{{post.content}}</h> <!-- 게시글 내용 -->
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        Made with Django
+    </footer>
+</body>
+</html>
