@@ -1,0 +1,23 @@
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  width: 900px;
+  margin: 10px auto;
+  background-color: #f4f4f2;
+} 
+
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
