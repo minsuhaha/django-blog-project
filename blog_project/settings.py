@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     # ckeditor
     'ckeditor',
     'ckeditor_uploader',
+
+    #drf
+    'rest_framework'
 ]
 
 # ckeditor 설정
