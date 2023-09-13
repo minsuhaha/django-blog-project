@@ -13,7 +13,7 @@ class BlogForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'topic', 'image']
+        fields = ['title', 'content', 'topic']
 
 
 

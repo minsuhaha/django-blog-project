@@ -48,7 +48,11 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
 
+<<<<<<< HEAD
     #drf
+=======
+    #DRF
+>>>>>>> main
     'rest_framework'
 ]
 
@@ -146,3 +150,8 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# super user 사용
+AUTH_USER_MODEL = 'blog.User'
