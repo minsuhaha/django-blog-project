@@ -10,15 +10,22 @@
 </head>
 <body>
     <!-- 네비게이션 바 -->
-    {% include "nav_black.html" %}
-    
-    <header>   
-        <h1>Lorem ipsum dolor</h1>
-        <h>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</h>
-        <div><button>READ MORE</button></div>
-        <img src = "{% static 'css/1.png' %}">
-    </header>
-    <main>
+        {% include "nav_black.html" %}
+        <!-- 대표게시글-->
+        <div class="firstcard">
+            <!--게시글 제목 내용-->
+            <div class="infobox">
+                <h1>Lorem ipsum dolor</h1>
+                <h class>Lorem ipsum dolor sit amet consectetur. Non pretium arcu praesent cursus aliquam pellentesque. Euismod consectetur fames vitae nunc gravida morbi felis porttitor integer. Ridiculus id purus feugiat et mi justo scelerisque euismod euismod. Turpis dictumst luctus nisi placerat purus dolor luctus vitae pretium. Gravida faucibus scelerisque quis mi consequat malesuada.</h>
+                <div class="readmore"><button>READ MORE</button></div>
+            </div>
+            <!--게시글 이미지-->
+            <div class="infoimg">
+                <img class="img" src = "{% static 'css/1.png' %}">
+            </div>
+        </div>
+
+        <!--게시글 목록-->
         <div class="card">
             {% for post in posts %}
                 {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
