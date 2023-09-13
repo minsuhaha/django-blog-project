@@ -31,9 +31,12 @@ def board_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-
-
 # Create your views here.
 def board(request):
     posts = Post.objects.all().order_by('-create_date')
     return render(request, 'board.html', {'posts': posts})
+
+def board_detail(request):
+    detail=Post.objects.all()
+    return render(request,'board_detail.html',{'detail':detail})
+
