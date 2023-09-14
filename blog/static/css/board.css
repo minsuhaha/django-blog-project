@@ -11,7 +11,7 @@ body{
 .firstcard{
     /* 배경 */
     background: #1E1E1E;
-    width: 1440px;
+    width: 70%;
     height: 25rem;
     flex-shrink: 0; 
     margin-top: 104px;
@@ -113,8 +113,14 @@ header button{
     width: 27%;
     display: flex;
     flex-direction: column;
-    margin: 2%;
+    padding: 2%;
+    border-radius: 0.5rem;
 }
+
+.card:hover{
+    background-color: #EEE;
+}
+
 
 .post_content{
     overflow-wrap: break-word;
