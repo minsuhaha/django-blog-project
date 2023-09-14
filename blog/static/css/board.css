@@ -1,3 +1,8 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
 body{
     background-color: #1e1e1e;
 }
@@ -6,18 +11,16 @@ body{
 .firstcard{
     /* 배경 */
     background: #1E1E1E;
-    width: 1440px;
-    height: 520px;
+    width: 70%;
+    height: 25rem;
     flex-shrink: 0; 
     margin-top: 104px;
-    margin-bottom: 200px;
 
     /* 위치 */
     flex-direction: column;
     justify-content: center;
     margin: auto;
     margin-top: 104px;
-    margin-bottom: 200px;
   
     /* 글씨체 */
     color: #fff;
@@ -57,10 +60,6 @@ body{
 }
 
 
-.card{
-    background: #F9F8F4;
-}
-
 .infobox{
     flex: 1;
     display: flex;
@@ -96,4 +95,34 @@ header button{
     background-color: #3A3A3A;
     color: white;
     width: 40%;
+}
+
+
+/* 카드부분 */
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: white;
+    padding: 3rem;
+    flex-wrap: wrap;
+}
+
+.card{
+    width: 27%;
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    border-radius: 0.5rem;
+}
+
+.card:hover{
+    background-color: #EEE;
+}
+
+
+.post_content{
+    overflow-wrap: break-word;
+    white-space: auto;
 }
