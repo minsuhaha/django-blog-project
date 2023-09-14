@@ -73,7 +73,8 @@ button:hover{
     transition: transform 0.8s,  background-color 0.3s;
     color: #ffffff;
   }
-  
+
+
 .logout-button:hover{
   color: rgb(255, 162, 162);
   transition: transform 0.8s,  color 0.3s;

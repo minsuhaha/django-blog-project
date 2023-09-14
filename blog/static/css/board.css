@@ -118,6 +118,7 @@ header button{
     flex-direction: column;
     padding: 2%;
     border-radius: 0.5rem;
+    color: #1E1E1E;
 }
 
 .card > img {
@@ -132,8 +133,16 @@ header button{
 .post_content{
     overflow-wrap: break-word;
     white-space: auto;
+    color:#1E1E1E;
 }
 
+.post_title{
+    color: #1E1E1E;
+}
+
+.create_date {
+    color: #1E1E1E;
+}
 
 
 /* 추천글 */

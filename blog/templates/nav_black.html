@@ -19,7 +19,6 @@
 
             <!-- 오른쪽 버튼 영역 -->
             <div class="nav-buttons">
-                <a href="{% url 'board' %}" class="primary-button">전체</a>
                 <a href="{% url 'board_topic' topic=1 %}" class="primary-button">일상</a>
                 <a href="{% url 'board_topic' topic=2 %}" class="primary-button">요리</a>
                 <a href="{% url 'board_topic' topic=3 %}" class="primary-button">영화</a>
@@ -29,9 +28,9 @@
                     <!-- 로그인/로그아웃 버튼 -->
                     {% if user.is_authenticated %}
                         <a href="{% url 'board_logout' %}" class="primary-button logout-button">Logout</a>
-                        <a href="{% url 'board_write' %}" class="primary-button create-post-button">Just Write!</a>
+                        <a href="{% url 'board_write' %}" style = "background-color: white; color:black;" class="primary-button create-post-button">Just Write!</a>
                     {% else %}
-                        <a href="{% url 'board_login' %}" class="primary-button">Login</a>
+                        <a href="{% url 'board_login' %}" style = "background-color: white; color:black;" class="primary-button">Login</a>
                     {% endif %}
                 </div>
             </div>

@@ -98,7 +98,7 @@ def board_detail(request, post_id):
         # 요청에 삭제가 포함된경우
         if 'delete-button' in request.POST:
             post_detail.delete()
-            return redirect('board_detail.html')
+            return redirect('board')
 
     # 조회수 증가 및 db에 저장
     post_detail.view += 1 
