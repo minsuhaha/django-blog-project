@@ -26,14 +26,19 @@
         </div>
 
         <!--게시글 목록-->
-        <div class="card">
+        <div class="cards">
             {% for post in posts %}
-                {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
-                <div><h>{{post.create_date}}</h></div> <!--작성 시간-->
-                <h3>{{post.title}}</h3> <!-- 게시글 제목 -->
-                <h>{{post.content}}</h> <!-- 게시글 내용 -->
+                <div class="card">
+                    {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
+                    <img src="{% static "css/1.png" %}" >
+                    <h>{{post.create_date}}</h> <!--작성 시간-->
+                    <h3>{{post.title}}</h3> <!-- 게시글 제목 -->
+                    <h>{{post.content}}</h> <!-- 게시글 내용 -->
+                </div>
             {% endfor %}
         </div>
+            
+        
     </main>
     <footer>
         {% include "footer.html" %}
