@@ -7,7 +7,7 @@ urlpatterns = [
    path('logout/', views.board_logout, name='board_logout'), 
    
    path('', views.board, name='board'),
-   path('<int:topic>/', views.board, name='board_topic'),
+   path('topic/<int:topic>/', views.board, name='board_topic'),
 
    path('write/', views.create_or_update_post, name='board_write'),
    path('edit_post/<int:post_id>/', views.create_or_update_post, name='board_write'),
