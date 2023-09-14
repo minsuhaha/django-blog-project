@@ -19,6 +19,7 @@
 
             <!-- 오른쪽 버튼 영역 -->
             <div class="nav-buttons">
+                <a href="{% url 'board' %}" class="primary-button">전체</a>
                 <a href="{% url 'board_topic' topic=1 %}" class="primary-button">일상</a>
                 <a href="{% url 'board_topic' topic=2 %}" class="primary-button">요리</a>
                 <a href="{% url 'board_topic' topic=3 %}" class="primary-button">영화</a>
