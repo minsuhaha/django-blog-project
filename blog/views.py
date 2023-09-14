@@ -1,18 +1,12 @@
-import random
 # views.py
 from django.contrib import messages
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.views import View
 from .forms import BlogForm
 from .models import Post
-from bs4 import BeautifulSoup
-from django.conf import settings
-from django.core.files.storage import default_storage
 from bs4 import BeautifulSoup
 import random
 
@@ -56,18 +50,11 @@ def create_or_update_post(request, post_id=None):
     # 수정할 게시물 정보를 가지고 있는 객체를 사용해 폼을 초기화함
     else:
         form = BlogForm(instance=post)
-    context = {'form': form}
-    return render(request, 'board_write.html', context)
 
-# 게시물 삭제 - board detail page
-@login_required(login_url='board_login')
-def board_delete(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    if request.user != post.writer:
-        messages.error(request, '삭제권한이 없습니다')
-        return redirect('board_detail', post_id=post.id)
-    post.delete()
-    return redirect('board')
+    template = 'board_write.html'
+    context = {'form': form, 'post': post, 'edit_mode': post_id is not None, 'MEDIA_URL': settings.MEDIA_URL,} #edit_mode: 글 수정 모드여부
+
+    return render(request, template, context)
 
 
 # 로그인 - login page
@@ -81,11 +68,11 @@ def board_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+
 # 로그아웃 - logout page
 def board_logout(request):
     logout(request)
     return redirect('board')
-
 
 
 # 메인 게시판 - board page
@@ -99,8 +86,39 @@ def board(request, topic=None):
     return render(request, 'board.html', {'posts': posts ,'title_post':title_post})
 
 
-
 # 상세 페이지 - board detail page
-def board_detail(request,id):
-    post_detail = Post.objects.filter('id' == id)
-    return render(request, 'board_detail.html')
+def board_detail(request, post_id):
+    post_detail = Post.objects.get(id = post_id)
+    # 포스트 id로 게시물 가져옴
+    if request.method == 'POST': 
+        
+        # 요청에 삭제가 포함된경우
+        if 'delete-button' in request.POST:
+            post_detail.delete()
+            return redirect('board_detail.html')
+
+    # 조회수 증가 및 db에 저장
+    post_detail.view += 1 
+    post_detail.save() 
+
+    # 이전/다음 게시물 가져옴
+    previous_post = Post.objects.filter(id__lt=post_detail.id, storage='Y').order_by('-id').first()
+    next_post = Post.objects.filter(id__gt=post_detail.id, storage='Y').order_by('id').first()
+
+    # 같은 주제인 게시물들 중 최신 글 가져옴
+    recommended_posts = Post.objects.filter(topic=post_detail.topic, storage='Y').exclude(id=post_detail.id).order_by('-create_date')[:2]
+
+    for recommended_post in recommended_posts:
+        soup = BeautifulSoup(recommended_post.content, 'html.parser')
+        image_tag = soup.find('img')
+        recommended_post.image_tag = str(image_tag) if image_tag else ''
+    
+    context = {
+        'post': post_detail,
+        'previous_post': previous_post,
+        'next_post': next_post,
+        'recommended_posts': recommended_posts,
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+
+    return render(request, 'board_detail.html', context)
