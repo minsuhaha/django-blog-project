@@ -12,7 +12,7 @@
       type="text/css"
       href="{% static 'css/reset.css' %}"
     />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/board_detail.css' %}" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -61,10 +61,10 @@
               <button class="edit-button">수정하기</button>
             </a>
             {% comment %} 삭제버튼 {% endcomment %}
-            <form method="POST" action="{% url 'board_detail' post.id %}">
+            <form method="POST" action="{% url 'board' %}">
               {% csrf_token %}
               <input type="hidden" name="delete-button" value="true">
-              <button type="submit" class="delete-button">삭제하기</button>
+                <button type="submit" class="delete-button">삭제하기</button>
             </form>
           </div>
           {% endif %}
