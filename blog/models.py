@@ -21,4 +21,5 @@ class Post(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     view = models.PositiveIntegerField(default=0)
+    storage = models.CharField(max_length=1, default='Y')
     
