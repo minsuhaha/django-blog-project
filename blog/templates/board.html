@@ -1,4 +1,4 @@
-{% load static %}
+{% load custom_filter%} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +30,16 @@
             {% for post in posts %}
                 <div class="card">
                     {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
-                    <img src="{% static "css/1.png" %}" >
-                    <h>{{post.create_date}}</h> <!--작성 시간-->
-                    <h3>{{post.title}}</h3> <!-- 게시글 제목 -->
-                    <h>{{post.content}}</h> <!-- 게시글 내용 -->
+                    {% if post.content|get_img_src %}
+                    <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
+                    {% else %}
+                    <div
+                      style="width: 100%; height: 100%; background-color: transparent"
+                    ></div>
+                    {% endif %}
+                    <p class='create_date'>{{post.create_date}}</p> <!--작성 시간-->
+                    <h3 class='post_title'>{{post.title}}</h3> <!-- 게시글 제목 -->
+                    <p class='post_content'>{{post.content|text_only}}</p> <!-- 게시글 내용 -->
                 </div>
             {% endfor %}
         </div>
