@@ -1,13 +1,16 @@
 # views.py
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
+from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from .forms import BlogForm
 from .models import Post
 from bs4 import BeautifulSoup
+from django.core.files.storage import default_storage
 import random
 
 
@@ -33,7 +36,7 @@ def create_or_update_post(request, post_id=None):
                 return redirect('board') 
 
             if not form.cleaned_data.get('topic'):
-                post.topic = '여행'
+                post.topic = '전체'
             
             # 임시저장 여부 설정
             if 'temp-save-button' in request.POST:
@@ -46,7 +49,7 @@ def create_or_update_post(request, post_id=None):
 
             post.save()
             return redirect('board_detail', post_id=post.id) # 업로드/수정한 페이지로 리다이렉트
-    
+        print(form.errors)
     # 수정할 게시물 정보를 가지고 있는 객체를 사용해 폼을 초기화함
     else:
         form = BlogForm(instance=post)
@@ -122,3 +125,25 @@ def board_detail(request, post_id):
     }
 
     return render(request, 'board_detail.html', context)
+
+
+# 이미지 업로드
+class image_upload(View):
+    
+    # 사용자가 이미지 업로드 하는경우 실행
+    def post(self, request):
+        
+        # file필드 사용해 요청에서 업로드한 파일 가져옴
+        file = request.FILES['file']
+        
+        # 저장 경로 생성
+        filepath = 'uploads/' + file.name
+        
+        # 파일 저장
+        filename = default_storage.save(filepath, file)
+        
+        # 파일 URL 생성
+        file_url = settings.MEDIA_URL + filename
+        
+        # 이미지 업로드 완료시 JSON 응답으로 이미지 파일의 url 반환
+        return JsonResponse({'location': file_url})
