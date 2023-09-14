@@ -12,5 +12,7 @@ urlpatterns = [
    path('write/', views.create_or_update_post, name='board_write'),
    path('edit_post/<int:post_id>/', views.create_or_update_post, name='board_write'),
    
+   path('image-upload/', views.image_upload.as_view(), name='image_upload'),
+
    path('board_detail/<int:post_id>/', views.board_detail, name= 'board_detail'),
 ]
