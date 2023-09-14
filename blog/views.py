@@ -1,3 +1,4 @@
+# views.py
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
@@ -76,11 +77,10 @@ def board_logout(request):
 
 # 메인 게시판 - board page
 def board(request, topic=None):
-
     if topic:
-        posts = Post.objects.filter(topic=topic, publish='Y').order_by('-views')
+        posts = Post.objects.filter(topic=topic, storage='Y').order_by('-view')
     else:
-        posts = Post.objects.filter(publish='Y').order_by('-views') 
+        posts = Post.objects.filter(storage='Y').order_by('-view') 
     
     title_post = Post.objects.all().order_by('-view').first()
     return render(request, 'board.html', {'posts': posts ,'title_post':title_post})
@@ -98,18 +98,15 @@ def board_detail(request, post_id):
             return redirect('board_detail.html')
 
     # 조회수 증가 및 db에 저장
-    post_detail.views += 1 
+    post_detail.view += 1 
     post_detail.save() 
 
     # 이전/다음 게시물 가져옴
     previous_post = Post.objects.filter(id__lt=post_detail.id, storage='Y').order_by('-id').first()
     next_post = Post.objects.filter(id__gt=post_detail.id, storage='Y').order_by('id').first()
 
-    # 같은 주제인 게시물들 중 랜덤으로 가져옴
-    recommended_posts = Post.objects.filter(topic=post_detail.topic, storage='Y').exclude(id=post_detail.id).order_by('?')
-
-    # 랜덤으로 2개의 게시물 가져오기 (또는 원하는 개수로 조절)
-    recommended_posts = random.sample(list(recommended_posts), 2)
+    # 같은 주제인 게시물들 중 최신 글 가져옴
+    recommended_posts = Post.objects.filter(topic=post_detail.topic, storage='Y').exclude(id=post_detail.id).order_by('-create_date')[:2]
 
     for recommended_post in recommended_posts:
         soup = BeautifulSoup(recommended_post.content, 'html.parser')
@@ -125,4 +122,3 @@ def board_detail(request, post_id):
     }
 
     return render(request, 'board_detail.html', context)
-
