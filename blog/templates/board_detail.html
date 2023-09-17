@@ -1,18 +1,17 @@
-# detail.html
-
-
 {% load static %}
 
 <!DOCTYPE html>
 <html>
   <head>
     <title>{{ post.title }}</title>
+    <!-- bootstrap 추가 (9/17 추가완료)-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link
       rel="stylesheet"
       type="text/css"
       href="{% static 'css/reset.css' %}"
     />
-    <link rel="stylesheet" type="text/css" href="{% static '../static/css/board_detail.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/board_detail.css' %}" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -36,7 +35,7 @@
             <h5>by {{ post.writer }}</h5>
             <h5 class="topic-box">{{ post.topic }}</h5>
           </div>
-          <div class="post-content">{{ post.content | safe }}</div>
+          <div class="post-content">{{ post.content|safe }}</div>
         </div>
         {% comment %} 추천글 영역 {% endcomment %}
         <div class="small-box">
@@ -47,7 +46,6 @@
                 <a href="{% url 'board_detail' recommended_post.id %}">
                   {% comment %} {{ recommended_post.image_tag|safe }} {% endcomment %}
                   {{ recommended_post.title }}</a>
-                
               </div>
             {% endfor %}
           </div>
@@ -104,8 +102,50 @@
       {% else %}
       <div class="another-post-box"></div>
       {% endif %}
+
+    <!-- 답변 기능 추가 (9/17 추가완료)-->
+      <!-- 답변 -->
+    <h5 class="border-bottom my-3 py-2">{{post.answer_set.count}}개의 답변이 있습니다.</h5>
+    {% for answer in post.answer_set.all %}
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2">
+                    {{ answer.create_date }}
+                </div>
+            </div>
+        </div>
     </div>
-    {% include 'footer.html' %}
+    {% endfor %}
+      <!-- 답변 등록 -->
+    <form action="{% url 'answer_create' post.id %}" method="post" class="my-3">
+      {% csrf_token %}
+      <!-- 오류표시 Start -->
+      {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+          {% for field in form %}
+          {% if field.errors %}
+          <div>
+              <strong>{{ field.label }}</strong>
+              {{ field.errors }}
+          </div>
+          {% endif %}
+          {% endfor %}
+      </div>
+      {% endif %}
+      <!-- 오류표시 End -->
+      <div class="form-group">
+          <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px;">답변등록</button>
+  </form>
+    </div>
+    <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/15)-->
+    <footer>
+      {% include 'footer.html' %}
+    </footer>
+
   </body>
   <script>
     // 공유하기 버튼 클릭 시
