@@ -15,4 +15,6 @@ urlpatterns = [
    path('image-upload/', views.image_upload.as_view(), name='image_upload'),
 
    path('board_detail/<int:post_id>/', views.board_detail, name= 'board_detail'),
+   # 답변 url 추가 (9/17 수정완료)
+   path('answer/create/<int:post_id>/', views.answer_create, name='answer_create'),
 ]
