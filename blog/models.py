@@ -23,3 +23,8 @@ class Post(models.Model):
     view = models.PositiveIntegerField(default=0)
     storage = models.CharField(max_length=1, default='Y')
     
+# Answer 모델 추가 (9/17 모델 추가 완료)
+class Answer(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    content = models.TextField(blank=True, null=True)
+    create_date = models.DateTimeField(auto_now_add=True)
