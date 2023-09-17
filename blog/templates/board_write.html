@@ -120,29 +120,30 @@
               AI 글 자동완성
             </button>
             <div class="box">
+              <!-- 수정 시 이미 선택되어진 topic이 기본값으로 나오도록 수정 (9/16 수정완료) -->
               <h2>TOPIC</h2>
               {% comment %} <div>
                 <input type="radio" id="all" name="topic" value="6" {% if topic == '6' %}checked{% endif %} />
                 <label for="all">전체</label>
               </div>  {% endcomment %}
               <div>
-                <input type="radio" id="daily" name="topic" value="1" {% if topic == '1' %}checked{% endif %}/>
+                <input type="radio" id="daily" name="topic" value="1" {% if post.topic.id  == 1 %}checked{% endif %}/>
                 <label for="daily">일상</label>
               </div>
               <div>
-                <input type="radio" id="cooking" name="topic" value="2" {% if topic == '2' %}checked{% endif %}//>
+                <input type="radio" id="cooking" name="topic" value="2" {% if post.topic.id  == 2 %}checked{% endif %}//>
                 <label for="cooking">요리</label>
               </div>
               <div>
-                <input type="radio" id="travel" name="topic" value="3" {% if topic == '3' %}checked{% endif %}//>
+                <input type="radio" id="travel" name="topic" value="3" {% if post.topic.id == 3 %}checked{% endif %}//>
                 <label for="travel">여행</label>
               </div>
               <div>
-                <input type="radio" id="movie" name="topic" value="4" {% if topic == '4' %}checked{% endif %}//>
+                <input type="radio" id="movie" name="topic" value="4" {% if post.topic.id == 4 %}checked{% endif %}//>
                 <label for="movie">영화</label>
               </div>
               <div>
-                <input type="radio" id="it" name="topic" value="5" {% if topic == '5' %}checked{% endif %}//>
+                <input type="radio" id="it" name="topic" value="5" {% if post.topic.id == 5 %}checked{% endif %}//>
                 <label for="it">IT / 전자기기</label>
               </div>
             </div>
@@ -179,6 +180,9 @@
         </a>
       </div>
     </div>
-    {% include 'footer.html' %}
+    <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/17)-->
+    <footer>
+      {% include 'footer.html' %}
+    </footer>
   </body>
 </html>
