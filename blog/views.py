@@ -1,17 +1,18 @@
 # views.py
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from .forms import BlogForm
+from .forms import AnswerForm, BlogForm
 from .models import Post
 from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
 import random
+from django.core.paginator import Paginator
 
 
 # 포스트 업로드, 업데이트, 삭제
@@ -50,6 +51,7 @@ def create_or_update_post(request, post_id=None):
             post.save()
             return redirect('board_detail', post_id=post.id) # 업로드/수정한 페이지로 리다이렉트
         print(form.errors)
+
     # 수정할 게시물 정보를 가지고 있는 객체를 사용해 폼을 초기화함
     else:
         form = BlogForm(instance=post)
@@ -86,7 +88,8 @@ def board(request, topic=None):
         posts = Post.objects.filter(storage='Y').order_by('-view') 
     
     title_post = Post.objects.all().order_by('-view').first()
-    return render(request, 'board.html', {'posts': posts ,'title_post':title_post})
+    # current_topic 값 추가로 넘겨주기 (9/15 수정완료) : 토픽 별 필터링 표시
+    return render(request, 'board.html', {'posts': posts ,'title_post': title_post, 'current_topic': topic})
 
 
 # 상세 페이지 - board detail page
@@ -147,3 +150,21 @@ class image_upload(View):
         
         # 이미지 업로드 완료시 JSON 응답으로 이미지 파일의 url 반환
         return JsonResponse({'location': file_url})
+    
+# 답변등록 answer_create view (9/17 생성완료)
+def answer_create(request, post_id):
+    """
+    pybo 답변등록
+    """
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.post = post
+            answer.save()
+            return redirect('board_detail', post_id=post.id)
+    else:
+        return HttpResponseNotAllowed('Only POST is possible.')
+    context = {'post': post, 'form': form}
+    return render(request, 'board_detail.html', context)
