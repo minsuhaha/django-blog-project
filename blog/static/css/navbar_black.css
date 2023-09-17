@@ -60,7 +60,7 @@ button:hover{
 .primary-button {
     display: inline-block;
     background-color: #1e1e1e;
-    border-radius: 2px;
+    border-radius: 10px; /* radius 수정 9/16(토) */
     text-decoration: none;
     text-align: center;
     font-weight: bold;
@@ -110,3 +110,7 @@ button:hover{
 
 /* 나머지 CSS 스타일은 그대로 유지합니다. */
 
+/* 토픽 필터링 표시 수정 9/16(토) */
+.primary-button.active {
+  background-color: #696969; 
+}
