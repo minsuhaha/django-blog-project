@@ -33,8 +33,9 @@
                 <a href = "{% url 'board_detail' post.id %}" class="card">
                     {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
                     {% if post.content|get_img_src %}
-                    {% comment %} <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" /> {% endcomment %}
-                    <img src="{% static "css/1.png" %}" alt="Thumbnail image" />
+                    <!-- board 이미지 나오도록 수정함 (9/15 수정완료) -->
+                    <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
+                    {% comment %} <img src="{% static "css/1.png" %}" alt="Thumbnail image" /> {% endcomment %}
                     {% else %}
                     <div
                       style="width: 100%; height: 100%; background-color: transparent; min-height:10rem"
@@ -49,7 +50,7 @@
         </div>
             
         
-    </main>
+    <!-- main 태그삭제-->
     <footer>
         {% include "footer.html" %}
     </footer>
