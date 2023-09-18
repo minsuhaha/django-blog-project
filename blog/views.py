@@ -13,11 +13,8 @@ from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-<<<<<<< HEAD
 from .models import Comment
-=======
 from django.db.models import Q
->>>>>>> view
 
 
 # 포스트 업로드, 업데이트, 삭제
@@ -239,4 +236,4 @@ def comment_update(request,post_id, comment_id):
         update_form.save()
         return redirect('board_detail', post_id)
     context = {'post': post, 'form': form}
-    return render(request, 'board_detail.html', context) 
+    return render(request, 'board_detail.html', context)
