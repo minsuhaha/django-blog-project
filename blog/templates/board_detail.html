@@ -45,7 +45,7 @@
               <div class="recommend-box">
                 <a href="{% url 'board_detail' recommended_post.id %}">
                   {{ recommended_post.image_tag|safe }}
-                  {{ recommended_post.title }}</a>
+                  <span style="display: block; text-align: center;">{{ recommended_post.title }}</span></a>
               </div>
             {% endfor %}
           </div>
