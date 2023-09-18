@@ -114,33 +114,54 @@ header button{
 
 .card{
     width: 27%;
+    height: 400px; /* Fixed height for each card. Adjust as needed */
     display: flex;
     flex-direction: column;
     padding: 2%;
     border-radius: 0.5rem;
     color: #1E1E1E;
+    overflow: hidden; 
+
+    align-items: flex-start; /* Left-aligns the text content */
+    justify-content: center; /* Vertically centers the content */
 }
 
 .card > img {
     min-height: 10rem;
+    width: 316px;
+    height: 220px;
+    flex-shrink: 0;
+    object-fit: cover;    /* Makes the image cover the container without distortion */
+    object-position: center;  
+    margin-left: auto; /* These two margin properties */
+    margin-right: auto; /* will horizontally center the image */
 }
 
 .card:hover{
     background-color: #EEE;
 }
 
+.card-content {
+    width: 316px;
+    height: 220px;
+    margin-left: auto; /* These two margin properties */
+    margin-right: auto; /* will horizontally center the image */
+}
 
 .post_content{
+    padding-top: 10px; 
     overflow-wrap: break-word;
     white-space: auto;
     color:#1E1E1E;
 }
 
 .post_title{
+    padding-top: 10px; /* 내용 주위의 여백을 조정하세요. */
     color: #1E1E1E;
 }
 
 .create_date {
+    padding-top: 10px; /* 내용 주위의 여백을 조정하세요. */
     color: #1E1E1E;
 }
 
