@@ -23,6 +23,14 @@ class Post(models.Model):
     view = models.PositiveIntegerField(default=0)
     storage = models.CharField(max_length=1, default='Y')
     
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        # '..' 문자열이 포함된 content 필드를 변경
+        self.content = self.content.replace('"..', '"')
+        super().save(*args, **kwargs)
+    
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     author_name = models.CharField(max_length=20)
