@@ -12,21 +12,33 @@
     <!-- 네비게이션 바 -->
         {% include "nav_black.html" %}
         <!-- 대표게시글-->
-        <div class="firstcard">  
-            <a href="{% url 'board_detail' title_post.id %}">         
-                <!--게시글 제목 내용-->
-                <div class="infobox">
-                    <h1>{{title_post.title}}</h1>
-                    <p class='rec_post_content'>{{title_post.content|text_only}}</p>
-                    <div class="readmore"><button>READ MORE</button></div>
-                    
-                </div>
-                <!--게시글 이미지-->
-                <div class="infoimg">
-                    <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
-                </div>
-            </a>
+        {% if title_post is null %}
+        <div class="firstcard" style='display:flex; justify-content: center; text-align:center'>
+             {% if user.is_authenticated %}
+                <a href="{% url 'board_write' %}" style = "color:white; font-size: 70px; text-decoration: none;" >글쓰러 가기!</a>
+            {% else %}
+                <a href="{% url 'board_login' %}" style = "color:white; font-size: 70px; text-decoration: none;">로그인하고 글쓰기!</a>
+            {% endif %}
         </div>
+           
+        {% else %}
+            <div class="firstcard">  
+                <a href="{% url 'board_detail' title_post.id %}">         
+                    <!--게시글 제목 내용-->
+                    <div class="infobox">
+                        <h1>{{title_post.title}}</h1>
+                        <p class='rec_post_content'>{{title_post.content|text_only}}</p>
+                        <div class="readmore"><button>READ MORE</button></div>
+                        
+                    </div>
+                    <!--게시글 이미지-->
+                    <div class="infoimg">
+                        <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+        
 
         <!--게시글 목록-->
         <div class="cards">
