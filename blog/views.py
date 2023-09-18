@@ -12,7 +12,7 @@ from .models import Post
 from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
 import random
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 # 포스트 업로드, 업데이트, 삭제
@@ -89,7 +89,31 @@ def board(request, topic=None):
     
     title_post = Post.objects.all().order_by('-view').first()
     # current_topic 값 추가로 넘겨주기 (9/15 수정완료) : 토픽 별 필터링 표시
-    return render(request, 'board.html', {'posts': posts ,'title_post': title_post, 'current_topic': topic})
+
+    # 페이지네이션
+    page = request.GET.get('page')
+
+    paginator = Paginator(posts, 6)
+
+    try:
+        page_obj = paginator.get_page(page)
+    
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        page_obj = paginator.get_page(paginator.num_pages)
+
+    left_index = (int(page) - 2)
+    if left_index < 1:
+        left_index = 1
+
+    right_index = (int(page) + 2)
+    if right_index > paginator.num_pages:
+        right_index = paginator.num_pages
+
+    custom_range = range(left_index, right_index+1)
+
+    return render(request, 'board.html', {'posts': posts ,'title_post': title_post, 'current_topic': topic, 'page_obj': page_obj, 'paginator': paginator, 'custom_range': custom_range})
 
 
 # 상세 페이지 - board detail page
