@@ -149,10 +149,13 @@ header button{
 }
 
 .post_content{
-    padding-top: 10px; 
-    overflow-wrap: break-word;
-    white-space: auto;
-    color:#1E1E1E;
+    padding-top: 10px;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    white-space:normal;
+    color: #1E1E1E;
 }
 
 .post_title{
