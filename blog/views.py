@@ -7,7 +7,7 @@ from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from .forms import BlogForm
+from .forms import BlogForm, CommentForm
 from .models import Post
 from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
@@ -191,19 +191,19 @@ class image_upload(View):
         return JsonResponse({'location': file_url})
     
 # 답변등록 answer_create view (9/17 생성완료)
-# def answer_create(request, post_id):
-#     """
-#     pybo 답변등록
-#     """
-#     post = get_object_or_404(Post, pk=post_id)
-#     if request.method == "POST":
-#         form = AnswerForm(request.POST)
-#         if form.is_valid():
-#             answer = form.save(commit=False)
-#             answer.post = post
-#             answer.save()
-#             return redirect('board_detail', post_id=post.id)
-#     else:
-#         return HttpResponseNotAllowed('Only POST is possible.')
-#     context = {'post': post, 'form': form}
-#     return render(request, 'board_detail.html', context)
+def comment_create(request, post_id):
+    """
+    pybo 답변등록
+    """
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('board_detail', post_id=post.id)
+    else:
+        return HttpResponseNotAllowed('Only POST is possible.')
+    context = {'post': post, 'form': form}
+    return render(request, 'board_detail.html', context)

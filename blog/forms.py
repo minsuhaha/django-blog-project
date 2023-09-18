@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Topic
+from .models import Post, Topic, Comment
 from ckeditor.widgets import CKEditorWidget  # CKEditor 위젯 추가
 
 
@@ -17,12 +17,14 @@ class BlogForm(forms.ModelForm):
         fields = ['title', 'content', 'topic']
 
 # 답변 폼 추가생성 (9/17 폼 생성완료)
-# class AnswerForm(forms.ModelForm):
-#     class Meta:
-#         model = Answer
-#         fields = ['content']
-#         labels = {
-#             'content': '답변내용',
-#         }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['author_name','author_pw','content']
+        labels = {
+            'author_name': '이름',
+            'author_pw': '비밀번호',
+            'content': '내용',
+        }
 
 
