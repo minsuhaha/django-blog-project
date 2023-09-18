@@ -84,10 +84,10 @@ def board_logout(request):
 def board(request, topic=None):
     if topic:
         posts = Post.objects.filter(topic=topic, storage='Y').order_by('-view')
+        title_post = Post.objects.filter(topic=topic, storage='Y').order_by('-view').first()
     else:
         posts = Post.objects.filter(storage='Y').order_by('-view') 
-    
-    title_post = Post.objects.all().order_by('-view').first()
+        title_post = Post.objects.all().order_by('-view').first()
     # current_topic 값 추가로 넘겨주기 (9/15 수정완료) : 토픽 별 필터링 표시
 
     # 페이지네이션
