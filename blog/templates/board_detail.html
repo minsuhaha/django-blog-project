@@ -105,21 +105,28 @@
 
     <!-- 답변 기능 추가 (9/17 추가완료)-->
       <!-- 답변 -->
-    {% comment %} <h5 class="border-bottom my-3 py-2">{{post.answer_set.count}}개의 답변이 있습니다.</h5>
-    {% for answer in post.answer_set.all %}
+    {% if post.comment_set.count is null %}
+      <h5 class="border-bottom my-3 py-2">0 개의 댓글이 있습니다.</h5>
+
+    {% else %}
+      <h5 class="border-bottom my-3 py-2">{{post.comment_set.count}} 개의 댓글이 있습니다.</h5>
+    {% endif %}
+    
+    {% for comment in post.comment_set.all %}
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+            <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
+            <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2">
-                    {{ answer.create_date }}
+                    {{ comment.create_date }}
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
       <!-- 답변 등록 -->
-    <form action="{% url 'answer_create' post.id %}" method="post" class="my-3">
+    <form action="{% url 'comment_create' post.id %}" method="post" class="my-3">
       {% csrf_token %}
       <!-- 오류표시 Start -->
       {% if form.errors %}
@@ -135,11 +142,16 @@
       </div>
       {% endif %}
       <!-- 오류표시 End -->
-      <div class="form-group">
-          <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+      <div class="form-group" style='display:flex; flex-direction: column;'>
+          <input type="text" name='author_name' id = 'comment' placeholder='이름을 입력하세요'>
+          <input type="number" name='author_pw' id = 'comment' placeholder='비밀번호 6자리를 입력하세요'>
+          <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'></textarea>
       </div>
-      <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px;">답변등록</button>
-  </form> {% endcomment %}
+      <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">답변등록</button>
+  </form>
+
+
+
   
     </div>
     <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/15)-->

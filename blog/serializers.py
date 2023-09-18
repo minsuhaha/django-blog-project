@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Topic, Post, User
+from .models import Topic, Post, User, Content
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,4 +14,9 @@ class PostSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = '__all__'
+
+class ContentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Content
         fields = '__all__'
