@@ -5,7 +5,7 @@
   <head>
     <title>{{ post.title }}</title>
     <!-- bootstrap 추가 (9/17 추가완료)-->
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link
       rel="stylesheet"
       type="text/css"
@@ -113,7 +113,7 @@
     {% endif %}
     
     {% for comment in post.comments.all %}
-    <div class="comment_container" style='display:flex; justify-content: space-between'>
+    <div class="comment_container">
 
       <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
         <div class="card-body">
@@ -126,10 +126,14 @@
             </div>
         </div>
       </div>
-
-      <div class="comment_edit" style='display: flex;'>
-        <a href="" class='edit' style = 'margin-right: 1rem'> 수정 </a>
-        <a href="" class='edit' style = 'margin-right: 1rem'> 삭제 </a>
+      
+      <div class="comment_edit" style="gap:10px;  display: flex;">
+        <a href="#">
+          <button class="edit-button">수정</button>
+        </a>
+        <a href="#">
+          <button class="delete-button">삭제</button>
+        </a>
       </div>
       
     
@@ -153,17 +157,21 @@
       </div>
       {% endif %}
       <!-- 오류표시 End -->
-      <div class="form-group" style='display:flex; flex-direction: column;'>
-          <input type="text" name='author_name' id = 'comment' placeholder='이름을 입력하세요'>
-          <input type="number" name='author_pw' id = 'comment' placeholder='비밀번호 6자리를 입력하세요'>
-          <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">답변등록</button>
+      <div class="form-group">
+        <div class="row">
+            <div class="col-6">
+                <input type="text" name='author_name' id='comment' placeholder='이름을 입력하세요' class="form-control">
+            </div>
+            <div class="col-6">
+                <input type="number" name='author_pw' id='comment' placeholder='비밀번호 6자리를 입력하세요' class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">답변등록</button>
   </form>
-
-
-
-  
     </div>
     <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/15)-->
     <footer>
