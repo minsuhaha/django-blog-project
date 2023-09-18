@@ -14,7 +14,6 @@ from django.core.files.storage import default_storage
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-
 # 포스트 업로드, 업데이트, 삭제
 def create_or_update_post(request, post_id=None):
     # 글수정 페이지의 경우
@@ -128,6 +127,7 @@ def board(request, topic=None):
 
         custom_range = range(left_index, right_index+1)
 
+    
     return render(request, 'board.html', {'posts': posts ,'title_post': title_post, 'current_topic': topic, 'page_obj': page_obj, 'paginator': paginator, 'custom_range': custom_range})
 
 
