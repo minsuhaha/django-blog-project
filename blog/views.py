@@ -225,4 +225,4 @@ def comment_update(request,post_id, comment_id):
         update_form.save()
         return redirect('board_detail', post_id)
     context = {'post': post, 'form': form}
-    return render(request, 'board_detail.html', context)
+    return render(request, 'board_detail.html', context) 
