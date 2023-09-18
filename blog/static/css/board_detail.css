@@ -31,7 +31,7 @@ body {
 
 .small-box {
   border: 1px solid #dbdbdb;
-  padding: 20px;
+  padding-left: 20px;
   width: calc(30% - 24px);
 }
 
@@ -153,14 +153,18 @@ a {
 .recommend-box a {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   font-weight: 700;
   font-size: 18px;
 }
 
 .recommend-box {
-  margin-top: 32px;
+  margin-top: 20px;
+  margin-right: 20px;
   padding: 8px;
+  width: 250px;
+  height: 250px;
+  flex-shrink: 0;
   border: 1px solid #dbdbdb;
 }
 
@@ -172,7 +176,12 @@ a {
 }
 
 .recommend-box img {
-  width: 100%;
-  object-fit: cover;
-  height: 100%;
+  min-height: 10rem;
+  width: 250px;
+  height: 200px;
+  flex-shrink: 0;
+  object-fit: cover;    /* Makes the image cover the container without distortion */
+  object-position: center;  
+  margin-left: auto; /* These two margin properties */
+  margin-right: auto; /* will horizontally center the image */
 }
