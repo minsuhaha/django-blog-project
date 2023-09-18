@@ -113,7 +113,7 @@
     {% endif %}
     
     {% for comment in post.comments.all %}
-    <div class="card my-3">
+    <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
             <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
