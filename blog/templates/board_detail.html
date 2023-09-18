@@ -105,7 +105,7 @@
 
     <!-- 답변 기능 추가 (9/17 추가완료)-->
       <!-- 답변 -->
-    <h5 class="border-bottom my-3 py-2">{{post.answer_set.count}}개의 답변이 있습니다.</h5>
+    {% comment %} <h5 class="border-bottom my-3 py-2">{{post.answer_set.count}}개의 답변이 있습니다.</h5>
     {% for answer in post.answer_set.all %}
     <div class="card my-3">
         <div class="card-body">
@@ -139,7 +139,8 @@
           <textarea name="content" id="content" class="form-control" rows="10"></textarea>
       </div>
       <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px;">답변등록</button>
-  </form>
+  </form> {% endcomment %}
+  
     </div>
     <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/15)-->
     <footer>
