@@ -23,8 +23,15 @@ class Post(models.Model):
     view = models.PositiveIntegerField(default=0)
     storage = models.CharField(max_length=1, default='Y')
     
-# Answer 모델 추가 (9/17 모델 추가 완료)
-class Answer(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    content = models.TextField(blank=True, null=True)
-    create_date = models.DateTimeField(auto_now_add=True)
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    author_name = models.CharField(max_length=20)
+    author_pw = models.IntegerField(default=None, null=True)
+    content = models.TextField()
+    create_date =models.DateTimeField(auto_now_add=True)
+
+    def approve(self):
+        self.save()
+
+    def __str__(self):
+        return self.content
