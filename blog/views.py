@@ -13,7 +13,11 @@ from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+<<<<<<< HEAD
 from .models import Comment
+=======
+from django.db.models import Q
+>>>>>>> view
 
 
 # 포스트 업로드, 업데이트, 삭제
@@ -85,14 +89,24 @@ def board_logout(request):
 def board(request, topic=None):
     if topic:
         posts = Post.objects.filter(topic=topic, storage='Y').order_by('-view')
+        if  Post.objects.filter(topic=topic, storage='Y'):
+            title_post = Post.objects.filter(topic=topic, storage='Y').order_by('-view').first()
+        else:
+            title_post = None
     else:
         posts = Post.objects.filter(storage='Y').order_by('-view') 
-    
-    title_post = Post.objects.all().order_by('-view').first()
+        title_post = Post.objects.all().order_by('-view').first()
     # current_topic 값 추가로 넘겨주기 (9/15 수정완료) : 토픽 별 필터링 표시
 
+    # 검색 기능
+    search_query = request.GET.get('search', '')
+    if search_query:
+        posts = posts.filter(Q(title__icontains=search_query) | 
+                             Q(content__icontains=search_query) |
+                             Q(writer__username__icontains = search_query))
+
     # 페이지네이션
-    page = request.GET.get('page')
+    page = request.GET.get('page')  
 
     paginator = Paginator(posts, 6)
 

@@ -12,57 +12,76 @@
     <!-- 네비게이션 바 -->
         {% include "nav_black.html" %}
         <!-- 대표게시글-->
-        <div class="firstcard">  
-            <a href="{% url 'board_detail' title_post.id %}">         
-            <!--게시글 제목 내용-->
-            <div class="infobox">
-                <h1>{{title_post.title}}</h1>
-                <p class='rec_post_content'>{{title_post.content|text_only}}</p>
-                <div class="readmore"><button>READ MORE</button></div>
-                
-            </div>
-            <!--게시글 이미지-->
-            <div class="infoimg">
-                <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
-            </div>
+        {% if title_post is null %}
+        <div class="firstcard" style='display:flex; justify-content: center; text-align:center'>
+             {% if user.is_authenticated %}
+                <a href="{% url 'board_write' %}" style = "color:white; font-size: 70px; text-decoration: none;" >글쓰러 가기!</a>
+            {% else %}
+                <a href="{% url 'board_login' %}" style = "color:white; font-size: 70px; text-decoration: none;">로그인하고 글쓰기!</a>
+            {% endif %}
         </div>
+           
+        {% else %}
+            <div class="firstcard">  
+                <a href="{% url 'board_detail' title_post.id %}">         
+                    <!--게시글 제목 내용-->
+                    <div class="infobox">
+                        <h1>{{title_post.title}}</h1>
+                        <p class='rec_post_content'>{{title_post.content|text_only}}</p>
+                        <div class="readmore"><button>READ MORE</button></div>
+                        
+                    </div>
+                    <!--게시글 이미지-->
+                    <div class="infoimg">
+                        <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+        
 
         <!--게시글 목록-->
         <div class="cards">
+            {% if posts.count == 0 %}
+                <h2>글이 존재하지 않습니다.</h2>
+            {% else %}
+                {% for post in page_obj %}
+                    <a href = "{% url 'board_detail' post.id %}" class="card">
+                        {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
+                        {% if post.content|get_img_src %}
+                        <!-- board 이미지 나오도록 수정함 (9/15 수정완료) -->
+                        <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
+                        {% comment %} <img src="{% static "css/1.png" %}" alt="Thumbnail image" /> {% endcomment %}
+                        {% else %}
+                        <div
+                        style="width: 100%; height: 100%; background-color: transparent; min-height:10rem"
+                        ></div>
+                        {% endif %}
+                        
+                        <div class="card-content">
+                            <p class='create_date'>{{post.create_date}}</p> <!-- 작성 시간 -->
+                            <h3 class='post_title'>{{post.title}}</h3> <!-- 게시글 제목 -->
+                            <p class='post_content'>{{post.content|text_only}}</p> <!-- 게시글 내용 -->
+                        </div> 
+                    </a>
+                {% endfor %}
+            {% endif %}
             {% comment %} {% for post in posts %} {% endcomment %}
-            {% for post in page_obj %}
-                <a href = "{% url 'board_detail' post.id %}" class="card">
-                    {% comment %} {{post.image}} <!-- 게시글 이미지 --> {% endcomment %}
-                    {% if post.content|get_img_src %}
-                    <!-- board 이미지 나오도록 수정함 (9/15 수정완료) -->
-                    <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
-                    {% comment %} <img src="{% static "css/1.png" %}" alt="Thumbnail image" /> {% endcomment %}
-                    {% else %}
-                    <div
-                      style="width: 100%; height: 100%; background-color: transparent; min-height:10rem"
-                    ></div>
-                    {% endif %}
-                    
-                    <div class="card-content">
-                        <p class='create_date'>{{post.create_date}}</p> <!-- 작성 시간 -->
-                        <h3 class='post_title'>{{post.title}}</h3> <!-- 게시글 제목 -->
-                        <p class='post_content'>{{post.content|text_only}}</p> <!-- 게시글 내용 -->
-                    </div> 
-                </a>
-            {% endfor %}
+            
         </div>
 
         <div>
             {% if page_obj.has_other_pages %}
-                <ul style = "display:flex; list-style:none; background-color:white; justify-content:center; font-size: 20px;" class = 'paginator'>
+                
+                <ul style = "display:flex; list-style:none; background-color:white; justify-content:center; font-size: 20px; padding-bottom:1rem;" class = 'paginator'>
                     
                     {% if page_obj.has_previous %}
-                        <li style='margin:0.5rem'><a style='text-decoration:none; color:black; font-weight: bold' href="?page={{page_obj.previous_page_number}}">&#10094; Prev</a></li>
+                        <li style='margin:0.5rem'><a style='text-decoration:none; color:black; font-weight: bold' href="?page={{page_obj.previous_page_number}}">&#10094;&#10094; Prev</a></li>
                     {% endif %}
                     
                     {% for page in paginator.page_range %}
                         {% if page == page_obj.number %}
-                            <li style='margin:0.5rem'><a style='text-decoration:none; color:red; font-weight:bold' href="?page={{page}}">{{page}}</a></li>
+                            <li style='margin:0.5rem'><a style='text-decoration:none; color:black; font-weight:bold; border: 3px solid black; border-radius: 1rem; padding: 0 0.5rem 0.2rem' href="?page={{page}}">{{page}}</a></li>
                         {% else %}
                             <li style='margin:0.5rem'><a style='text-decoration:none; color:black' href="?page={{page}}">{{page}}</a></li>
                         {% endif %}
@@ -70,7 +89,7 @@
                     {% endfor %}
                 
                     {% if page_obj.has_next %}
-                        <li style='margin:0.5rem'><a style='text-decoration:none; color:black; font-weight: bold' href="?page={{page_obj.next_page_number}}">Next &#10095;</a></li>
+                        <li style='margin:0.5rem'><a style='text-decoration:none; color:black; font-weight: bold' href="?page={{page_obj.next_page_number}}">Next &#10095;&#10095;</a></li>
                     {% endif %}
                 
                 </ul>
