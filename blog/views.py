@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from django.core.files.storage import default_storage
 import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .models import Comment
 
 
 # 포스트 업로드, 업데이트, 삭제
@@ -205,5 +206,23 @@ def comment_create(request, post_id):
             return redirect('board_detail', post_id=post.id)
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
+    context = {'post': post, 'form': form}
+    return render(request, 'board_detail.html', context)
+
+
+def comment_delete(request,post_id, comment_id ):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.delete()
+    return redirect('board_detail', post_id)
+
+def comment_update(request,post_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    form = CommentForm(instance=comment)
+    post = get_object_or_404(Post, pk=post_id)
+    # if request.method == "POST":
+    update_form = CommentForm(request.POST, instance=comment)
+    if update_form.is_valid():
+        update_form.save()
+        return redirect('board_detail', post_id)
     context = {'post': post, 'form': form}
     return render(request, 'board_detail.html', context)

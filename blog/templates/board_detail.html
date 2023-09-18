@@ -5,7 +5,7 @@
   <head>
     <title>{{ post.title }}</title>
     <!-- bootstrap 추가 (9/17 추가완료)-->
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link
       rel="stylesheet"
       type="text/css"
@@ -104,67 +104,79 @@
       {% endif %}
 
     <!-- 답변 기능 추가 (9/17 추가완료)-->
-      <!-- 답변 -->
+        <!-- 답변 -->
     {% if post.comments.count is null %}
-      <h5 class="border-bottom my-3 py-2">0 개의 댓글이 있습니다.</h5>
+    <h5 class="border-bottom my-3 py-2">0 개의 댓글이 있습니다.</h5>
 
-    {% else %}
-      <h5 class="border-bottom my-3 py-2">{{post.comments.count}} 개의 댓글이 있습니다.</h5>
-    {% endif %}
-    
-    {% for comment in post.comments.all %}
-    <div class="comment_container" style='display:flex; justify-content: space-between'>
+  {% else %}
+    <h5 class="border-bottom my-3 py-2">{{post.comments.count}} 개의 댓글이 있습니다.</h5>
+  {% endif %}
+  
+  {% for comment in post.comments.all %}
+  <div class="comment_container">
 
-      <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
-        <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
-            <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2">
-                    {{ comment.create_date }}
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <div class="comment_edit" style='display: flex;'>
-        <a href="" class='edit' style = 'margin-right: 1rem'> 수정 </a>
-        <a href="" class='edit' style = 'margin-right: 1rem'> 삭제 </a>
-      </div>
-      
-    
-    </div>
-    
-    {% endfor %}
-      <!-- 답변 등록 -->
-    <form action="{% url 'comment_create' post.id %}" method="post" class="my-3">
-      {% csrf_token %}
-      <!-- 오류표시 Start -->
-      {% if form.errors %}
-      <div class="alert alert-danger" role="alert">
-          {% for field in form %}
-          {% if field.errors %}
-          <div>
-              <strong>{{ field.label }}</strong>
-              {{ field.errors }}
+    <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
+      <div class="card-body">
+          <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
+          <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
+          <div class="d-flex justify-content-end">
+              <div class="badge bg-light text-dark p-2">
+                  {{ comment.create_date }}
+              </div>
           </div>
-          {% endif %}
-          {% endfor %}
+      </div>
+    </div>
+
+    {% comment %} <form action="{% url 'comment_update' post.id comment.id%}" method="post">  {% endcomment %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="comment_edit" style="gap:10px;  display: flex;">
+      <a href="{% url 'comment_update' post.id comment.id %}">
+        <button class="edit-button" type="submit">수정</button>
+      </a>
+    {% comment %} </form> {% endcomment %}
+      <a href="{% url 'comment_delete' post.id comment.id %}">
+        <button class="delete-button">삭제</button>
+      </a>
+    </div>
+  
+  </div>
+  
+  {% endfor %}
+
+ <!-- 답변 등록 -->
+ <form action="{% url 'comment_create' post.id %}" method="post" class="my-3">
+  {% csrf_token %}
+  <!-- 오류표시 Start -->
+  {% if form.errors %}
+  <div class="alert alert-danger" role="alert">
+      {% for field in form %}
+      {% if field.errors %}
+      <div>
+          <strong>{{ field.label }}</strong>
+          {{ field.errors }}
       </div>
       {% endif %}
-      <!-- 오류표시 End -->
-      <div class="form-group" style='display:flex; flex-direction: column;'>
-          <input type="text" name='author_name' id = 'comment' placeholder='이름을 입력하세요'>
-          <input type="number" name='author_pw' id = 'comment' placeholder='비밀번호 6자리를 입력하세요'>
-          <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">답변등록</button>
-  </form>
-
-
-
-  
+      {% endfor %}
+  </div>
+  {% endif %}
+  <!-- 오류표시 End -->
+  <div class="form-group">
+    <div class="row">
+        <div class="col-6">
+            <input type="text" name='author_name' id='comment' placeholder='이름을 입력하세요' class="form-control">
+        </div>
+        <div class="col-6">
+            <input type="number" name='author_pw' id='comment' placeholder='비밀번호 6자리를 입력하세요' class="form-control">
+        </div>
     </div>
+</div>
+<div class="form-group">
+    <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'></textarea>
+</div>
+<button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">답변등록</button>
+</form>
+</div>
     <!-- footer 태그안으로 include 'footer'.html 로 수정 (9/15)-->
     <footer>
       {% include 'footer.html' %}
