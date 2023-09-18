@@ -113,7 +113,9 @@
     {% endif %}
     
     {% for comment in post.comments.all %}
-    <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
+    <div class="comment_container" style='display:flex; justify-content: space-between'>
+
+      <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
             <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
@@ -123,7 +125,16 @@
                 </div>
             </div>
         </div>
+      </div>
+
+      <div class="comment_edit" style='display: flex;'>
+        <a href="" class='edit' style = 'margin-right: 1rem'> 수정 </a>
+        <a href="" class='edit' style = 'margin-right: 1rem'> 삭제 </a>
+      </div>
+      
+    
     </div>
+    
     {% endfor %}
       <!-- 답변 등록 -->
     <form action="{% url 'comment_create' post.id %}" method="post" class="my-3">
