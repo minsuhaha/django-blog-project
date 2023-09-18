@@ -105,14 +105,14 @@
 
     <!-- 답변 기능 추가 (9/17 추가완료)-->
       <!-- 답변 -->
-    {% if post.comment_set.count is null %}
+    {% if post.comments.count is null %}
       <h5 class="border-bottom my-3 py-2">0 개의 댓글이 있습니다.</h5>
 
     {% else %}
-      <h5 class="border-bottom my-3 py-2">{{post.comment_set.count}} 개의 댓글이 있습니다.</h5>
+      <h5 class="border-bottom my-3 py-2">{{post.comments.count}} 개의 댓글이 있습니다.</h5>
     {% endif %}
     
-    {% for comment in post.comment_set.all %}
+    {% for comment in post.comments.all %}
     <div class="card my-3">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
