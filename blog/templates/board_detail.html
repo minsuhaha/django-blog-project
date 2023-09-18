@@ -5,7 +5,7 @@
   <head>
     <title>{{ post.title }}</title>
     <!-- bootstrap 추가 (9/17 추가완료)-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
     <link
       rel="stylesheet"
       type="text/css"
@@ -44,7 +44,7 @@
             {% for recommended_post in recommended_posts %}
               <div class="recommend-box">
                 <a href="{% url 'board_detail' recommended_post.id %}">
-                  {% comment %} {{ recommended_post.image_tag|safe }} {% endcomment %}
+                  {{ recommended_post.image_tag|safe }}
                   {{ recommended_post.title }}</a>
               </div>
             {% endfor %}
