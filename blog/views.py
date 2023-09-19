@@ -291,8 +291,6 @@ def comment_update(request, comment_id):
     return JsonResponse({'error': '댓글 수정에 실패했습니다.'}, status=400)
 
 
-from django.http import JsonResponse
-
 def check_comment_password(request, comment_id):
     provided_password = request.GET.get('author_pw')
     try:
