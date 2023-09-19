@@ -1,11 +1,9 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
   <head>
     <title>{{ post.title }}</title>
     <!-- bootstrap 추가 (9/17 추가완료)-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link
       rel="stylesheet"
@@ -23,6 +21,7 @@
       type="text/css"
       href="{% static 'css/footer.css' %}"
     />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     {% include 'nav_white.html' %}
@@ -45,8 +44,13 @@
             {% for recommended_post in recommended_posts %}
               <div class="recommend-box">
                 <a href="{% url 'board_detail' recommended_post.id %}">
-                  {{ recommended_post.image_tag|safe }}
-                  <span style="display: block; text-align: center;">{{ recommended_post.title }}</span></a>
+                  {% if recommended_post.image_tag %}
+                    {{ recommended_post.image_tag|safe }}
+                  {% else %}
+                    <img src="{% static 'img/nophoto2.png' %}">
+                  {% endif %}
+                  <span style="display: block; text-align: center;">{{ recommended_post.title }}</span>
+                </a>
               </div>
             {% endfor %}
           </div>
@@ -117,37 +121,59 @@
  
   {% for comment in post.comments.all %}
   <div class="comment_container">
-
-    <div class="card my-3" style='border-bottom: 0.5px solid lightgray; padding-bottom: 1rem'>
-      <div class="card-body">
-          <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
-          <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
-          <div class="d-flex justify-content-end">
-              <div class="badge bg-light text-dark p-2">
-                  {{ comment.create_date }}
+      <div class="card my-3" style="border-bottom: 0.5px solid lightgray; padding-bottom: 1rem">
+          <div class="card-body">
+              <div class="card-text" style="white-space: pre-line;">{{ comment.author_name }}</div>
+              <div class="card-text" style="white-space: pre-line;">
+                  <span id="comment-content-{{ comment.id }}">{{ comment.content }}</span>
+                  <button class="edit-comment-button" data-comment-id="{{ comment.id }}">수정</button>
+                  <a href="{% url 'comment_delete' post.id comment.id %}">
+                    <button class="delete-button">삭제</button>
+                  </a>
+                </div>
+              <div class="d-flex justify-content-end">
+                  <div class="badge bg-light text-dark p-2">{{ comment.create_date }}</div>
               </div>
           </div>
       </div>
-    </div>
 
-    {% comment %} <form action="{% url 'comment_update' post.id comment.id%}" method="post">  {% endcomment %}
-    {% csrf_token %}
+      <form class="edit-comment-form" data-comment-id="{{ comment.id }}" style="display: none;" class="my-3">
+        {% csrf_token %}
     
-    <div class="comment_edit" style="gap:10px;  display: flex;">
-      <a href="{% url 'comment_update' post.id comment.id %}">
-        <button class="edit-button" type="submit">수정</button>
-      </a>
-    {% comment %} </form> {% endcomment %}
-      <a href="{% url 'comment_delete' post.id comment.id %}">
-        <button class="delete-button">삭제</button>
-      </a>
-    </div>
-  
+        <!-- 오류표시 Start -->
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for field in form %}
+          {% if field.errors %}
+          <div>
+            <strong>{{ field.label }}</strong>
+            {{ field.errors }}
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+        
+        <div class="form-group">
+          <div class="row">
+            <div class="col-6">
+              <input type="text" name='author_name' id='comment' class="form-control" value="{{ comment.author_name }}">
+            </div>
+            <div class="col-6">
+              <input type="number" name='author_pw' id='comment' class="form-control" value="{{ comment.author_pw }}">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <textarea name="content" id="content" class="form-control" rows="10" placeholder='내용을 입력하세요'>{{ form.content.value }}</textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="background-color: #000; border: none; margin-top: 10px; color: white">수정 완료</button>
+      </form>
   </div>
-  
-  {% endfor %}
-
-  {{ form.as_p }}
+{% endfor %}
 
  <!-- 답변 등록 -->
  <form action="{% url 'comment_create' post.id %}" method="post" class="my-3">
@@ -186,8 +212,7 @@
     <footer>
       {% include 'footer.html' %}
     </footer>
-
-  </body>
+</body>
   <script>
     // 공유하기 버튼 클릭 시
     document.querySelector('.share-button').addEventListener('click', function() {
@@ -204,5 +229,46 @@
       // 알림 표시
       alert('포스트 링크가 클립보드에 복사되었습니다');
     });
+
+      // AJAX를 사용하여 댓글 수정 기능 구현
+      document.querySelectorAll('.edit-comment-button').forEach(function(button) {
+          button.addEventListener('click', function() {
+              // 수정 버튼을 누른 댓글의 ID를 가져옴
+              const commentId = button.getAttribute('data-comment-id');
+              
+              // 해당 댓글의 수정 폼을 표시
+              const editForm = document.querySelector(`.edit-comment-form[data-comment-id="${commentId}"]`);
+              editForm.style.display = 'block';
+              
+              // 해당 댓글의 내용을 가져와서 수정 폼에 채움
+              const commentContent = document.querySelector(`#comment-content-${commentId}`);
+              const contentTextarea = editForm.querySelector('textarea');
+              contentTextarea.value = commentContent.textContent.trim();
+              
+              // 수정 폼 제출 시 AJAX 요청
+              editForm.addEventListener('submit', function(event) {
+                  event.preventDefault();
+                  const formData = new FormData(editForm);
+                  fetch(`/comment/update/${commentId}/`, {
+                      method: 'POST',
+                      body: formData,
+                      headers: {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      // 수정된 내용을 댓글 내용에 반영
+                      commentContent.textContent = data.content;
+                      // 수정 폼을 숨김
+                      editForm.style.display = 'none';
+                  })
+                  .catch(error => {
+                      console.error('댓글 수정 실패:', error);
+                  });
+              });
+          });
+      });
   </script>
 </html>
