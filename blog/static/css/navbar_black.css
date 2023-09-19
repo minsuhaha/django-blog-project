@@ -184,3 +184,56 @@ button:hover{
   border: 1px solid var(--border-color, #303030);
   background: var(--border-color, #303030);
 }
+
+
+
+
+
+
+
+
+
+/* NAV 반응형 예시 */
+
+.nav-links{
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-links li{
+  list-style: none;
+}
+
+.navbar__toggleBtn {
+  display: none;
+  position: absolute;
+  right: 32px;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 1300px) {
+  .nav-buttons {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 8px 24px;
+  }
+  .nav-links {
+          display: none;
+          align-items: center;
+          width: 100%;
+  }
+  .nav-links li {
+          width: 100%;
+          text-align: center;
+  }
+  .navbar__toggleBtn {
+           display: block;
+   }
+  .nav-links.active{
+          display: flex;
+  }
+
+  .active-search{
+    display: none;
+  }
+}
