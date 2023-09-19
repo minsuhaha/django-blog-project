@@ -108,6 +108,20 @@ h5 {
 .edit-button {
   background: #E1E0DB;
 }
+.edit-comment-button {
+  background: #E1E0DB;
+  border-radius: 3px;
+  padding: 7px 16px;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  width: 70px;
+  height: 25px;
+  flex-shrink: 0;
+}
 
 
 .edit-button, .delete-button, .share-button{
