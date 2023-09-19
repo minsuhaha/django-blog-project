@@ -18,6 +18,8 @@ from .models import Comment
 from django.db.models import Q
 import json, os
 from pathlib import Path
+from django.views.decorators.http import require_GET
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -287,3 +289,19 @@ def comment_update(request, comment_id):
     
     # 실패할 경우 JSON 응답으로 에러 반환
     return JsonResponse({'error': '댓글 수정에 실패했습니다.'}, status=400)
+
+
+from django.http import JsonResponse
+
+def check_comment_password(request, comment_id):
+    provided_password = request.GET.get('author_pw')
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        if comment.author_pw == int(provided_password):
+            print('일치하지?')
+            return JsonResponse({'message': '비밀번호 일치'})
+        else:
+            print('일치안해?')
+            return JsonResponse({'message': '비밀번호 불일치'})
+    except Comment.DoesNotExist:
+        return JsonResponse({'message': '댓글이 존재하지 않음'}, status=404)
