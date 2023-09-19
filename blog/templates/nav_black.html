@@ -18,8 +18,12 @@
             
             <!-- 검색 폼 추가 -->
             <form method="GET" action="{% url 'board' %}" class="search-form">
-                <input type="text" name="search" placeholder="검색어 입력">
-                <button type="submit">검색</button>
+                <div class = 'search_box_area'>
+                    <input class = 'search_box' id = 'search' type="text" name="search" placeholder="검색">
+                        <div id="search_box_btn">
+                            <input class="search_box_icon" type="image" src="{% static 'img/search.png' %}">
+                        </div>
+                </div>
             </form>
 
             <!-- 오른쪽 버튼 영역 -->  
