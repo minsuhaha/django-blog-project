@@ -75,7 +75,7 @@ h5 {
 .post-content img {
   display: block;
   max-width: -webkit-fill-available;
-  padding: 40px 0;
+  margin: 40px 0;
   object-fit: cover;
 
 }
