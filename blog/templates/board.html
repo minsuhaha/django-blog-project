@@ -33,7 +33,11 @@
                     </div>
                     <!--게시글 이미지-->
                     <div class="infoimg">
-                        <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
+                        {% if title_post.content|get_img_src %}
+                            <img class="img" src = "{{ title_post.content|get_img_src}}" alt =""/>
+                        {% else %}
+                            <img src="{% static 'img/nophoto2.png' %}">
+                        {% endif %}
                     </div>
                 </a>
             </div>
@@ -53,9 +57,10 @@
                         <img src="{{ post.content|get_img_src }}" alt="Thumbnail image" />
                         {% comment %} <img src="{% static "css/1.png" %}" alt="Thumbnail image" /> {% endcomment %}
                         {% else %}
-                        <div
+                        <img src="{% static 'img/nophoto2.png' %}">
+                        {% comment %} <div
                         style="width: 100%; height: 100%; background-color: transparent; min-height:10rem"
-                        ></div>
+                        ></div> {% endcomment %}
                         {% endif %}
                         
                         <div class="card-content">

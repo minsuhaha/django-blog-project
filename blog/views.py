@@ -26,6 +26,7 @@ secrets = json.load(open(PASSWORD_FILE))
 
 
 openai.api_key = secrets["openai_api_key"]
+from django.http import JsonResponse
 
 # 포스트 업로드, 업데이트, 삭제
 def create_or_update_post(request, post_id=None):
@@ -237,17 +238,17 @@ def comment_delete(request,post_id, comment_id ):
     comment.delete()
     return redirect('board_detail', post_id)
 
-def comment_update(request,post_id, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    form = CommentForm(instance=comment)
-    post = get_object_or_404(Post, pk=post_id)
-    # if request.method == "POST":
-    update_form = CommentForm(request.POST, instance=comment)
-    if update_form.is_valid():
-        update_form.save()
-        return redirect('board_detail', post_id)
-    context = {'post': post, 'form': form}
-    return render(request, 'board_detail.html', context)
+# def comment_update(request,post_id, comment_id):
+#     comment = Comment.objects.get(id=comment_id)
+#     form = CommentForm(instance=comment)
+#     post = get_object_or_404(Post, pk=post_id)
+#     # if request.method == "POST":
+#     update_form = CommentForm(request.POST, instance=comment)
+#     if update_form.is_valid():
+#         update_form.save()
+#         return redirect('board_detail', post_id)
+#     context = {'post': post, 'form': form}
+#     return render(request, 'board_detail.html', context)
 
 
 def autocomplete(request):
@@ -269,3 +270,20 @@ def autocomplete(request):
             message = str(e)
         return JsonResponse({"message": message})
     return render(request, 'autocomplete.html')
+
+def comment_update(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.content = form.cleaned_data['content']  # 수정된 content로 업데이트
+            comment.save()
+            
+            # JSON 응답으로 수정된 댓글 내용 반환
+            response_data = {'content': comment.content}
+            return JsonResponse(response_data)
+    
+    # 실패할 경우 JSON 응답으로 에러 반환
+    return JsonResponse({'error': '댓글 수정에 실패했습니다.'}, status=400)
