@@ -7,6 +7,7 @@ from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+import openai
 from .forms import BlogForm, CommentForm
 from .models import Post
 from bs4 import BeautifulSoup
@@ -15,6 +16,16 @@ import random
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Comment
 from django.db.models import Q
+import json, os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+PASSWORD_FILE = os.path.join(BASE_DIR, 'password.json')
+secrets = json.load(open(PASSWORD_FILE))
+
+
+openai.api_key = secrets["openai_api_key"]
 
 # 포스트 업로드, 업데이트, 삭제
 def create_or_update_post(request, post_id=None):
@@ -237,3 +248,24 @@ def comment_update(request,post_id, comment_id):
         return redirect('board_detail', post_id)
     context = {'post': post, 'form': form}
     return render(request, 'board_detail.html', context)
+
+
+def autocomplete(request):
+    if request.method == "POST":
+
+        #제목 필드값 가져옴
+        prompt = request.POST.get('title')
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ],
+            )
+            # 반환된 응답에서 텍스트 추출해 변수에 저장
+            message = response['choices'][0]['message']['content']
+        except Exception as e:
+            message = str(e)
+        return JsonResponse({"message": message})
+    return render(request, 'autocomplete.html')

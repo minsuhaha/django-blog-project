@@ -83,8 +83,11 @@
           });
         });
       });
+    </script>
 
-        document.getElementById('aiAutocompleteButton').addEventListener('click', function() {
+    {% comment %} AI용 스크립트 {% endcomment %}
+    <script>
+      document.getElementById('aiAutocompleteButton').addEventListener('click', function() {
           // 로딩 애니메이션 
           document.getElementById('loading-animation').style.display = 'block';
           document.getElementById('ai-img').style.display = 'none';
@@ -115,9 +118,8 @@
             document.getElementById('loading-animation').style.display = 'none';
           });
         });
-      });
-
     </script>
+
   </head>
   <body>
     {% if temp_load %}
@@ -153,11 +155,6 @@
               </div> 
               AI 글 자동완성
             </button>
-
-            
-            
-
-
             <div class="box">
               <!-- 수정 시 이미 선택되어진 topic이 기본값으로 나오도록 수정 (9/16 수정완료) -->
               <h2>TOPIC</h2>

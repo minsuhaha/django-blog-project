@@ -19,4 +19,7 @@ urlpatterns = [
    path('comment/create/<int:post_id>/', views.comment_create, name='comment_create'),
    path('<int:post_id>/comment/delete/<int:comment_id>/', views.comment_delete, name='comment_delete'),
    path('<int:post_id>/comment/update/<int:comment_id>/', views.comment_update, name='comment_update'),
+
+
+   path('autocomplete/', views.autocomplete, name='autocomplete'),
 ]
