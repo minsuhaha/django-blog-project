@@ -52,7 +52,7 @@ def create_or_update_post(request, post_id=None):
                 return redirect('board') 
 
             if not form.cleaned_data.get('topic'):
-                post.topic = '전체'
+                post.topic = 1
             
             # 임시저장 여부 설정
             if 'temp-save-button' in request.POST:

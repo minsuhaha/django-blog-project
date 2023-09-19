@@ -28,7 +28,7 @@ class Post(models.Model):
     
     def save(self, *args, **kwargs):
         # '..' 문자열이 포함된 content 필드를 변경
-        self.content = self.content.replace('"..', '"')
+        self.content = self.content.replace('"../..', '"')
         super().save(*args, **kwargs)
     
 class Comment(models.Model):
