@@ -30,6 +30,10 @@
 
 ## 프로젝트 소개(UI)
 
+### 시안영상
+[시안영상 보기](https://smart-bill-194.notion.site/164126f8a8b84277a8733e33971e1a14)
+<br>
+
 ### 로그인
 <img width="412" alt="image" src="https://github.com/minsuhaha/django-blog-project/assets/105342203/dd4f5544-19de-467a-a7b6-f4caf92ac913">
 <br>
