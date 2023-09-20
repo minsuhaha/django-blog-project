@@ -122,7 +122,21 @@ h5 {
   height: 25px;
   flex-shrink: 0;
 }
-
+.delete-comment-button{
+  background: #1E1E1E;
+  color: #F9F8F4;
+  border-radius: 3px;
+  padding: 7px 16px;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  width: 70px;
+  height: 25px;
+  flex-shrink: 0;
+}
 
 .edit-button, .delete-button, .share-button{
   border-radius: 3px;

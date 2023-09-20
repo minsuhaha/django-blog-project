@@ -134,9 +134,8 @@
       </div>
       <div class="button-group d-flex" style="gap: 20px;">
         <button class="edit-comment-button" data-comment-id="{{ comment.id }}">수정</button>
-        <a href="{% url 'comment_delete' post.id comment.id %}">
-          <button class="delete-button">삭제</button>
-        </a>
+        <button class="delete-comment-button" data-comment-id="{{ comment.id }}">삭제</button>
+        
       </div>
     
       </br>
@@ -234,7 +233,7 @@
     });
     
 
-   // JavaScript 코드
+   // 댓글 수정
   document.querySelectorAll('.edit-comment-button').forEach(function (button) {
   button.addEventListener('click', function () {
     // 수정 버튼을 누른 댓글의 ID를 가져옴
@@ -296,6 +295,54 @@
   });
 });
 
+  // 글 삭제 버튼 클릭 시 경고창이 뜨고 삭제되도록
+  document.querySelector('.delete-button').addEventListener('click', function (event) {
+    event.preventDefault(); // 기본 동작 방지 (폼 제출 등)
+    
+    // 확인 창을 띄우고 사용자의 선택을 확인
+    const isConfirmed = window.confirm('정말로 삭제하시겠습니까?');
 
+    if (isConfirmed) {
+      // 사용자가 확인을 선택한 경우, 삭제 동작 수행
+      const deleteForm = event.target.parentElement;
+      deleteForm.submit(); // 폼 제출 (삭제 동작)
+    }
+  });
+
+  // 댓글 삭제 시 경고창이 뜨고 삭제되도록
+  document.querySelectorAll('.delete-comment-button').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const commentId = button.getAttribute('data-comment-id');
+      
+      // 확인 대화 상자를 띄움
+      const confirmed = confirm('댓글을 삭제하시겠습니까?');
+      
+      // 사용자가 확인을 눌렀을 경우
+      if (confirmed) {
+        // 서버로 댓글 삭제 요청을 보냄
+        fetch(`/comment/delete/${commentId}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}', // CSRF 토큰을 적절히 설정
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === 'success') {
+              // 삭제 성공
+              alert('댓글이 삭제되었습니다.');
+              // 삭제 성공 시 페이지 새로고침
+              window.location.reload();
+            } else {
+              // 삭제 실패
+              alert('댓글 삭제에 실패했습니다.');
+            }
+          })
+          .catch((error) => {
+            console.error('댓글 삭제 요청 실패:', error);
+          });
+      }
+    });
+  });
   </script>
 </html>
