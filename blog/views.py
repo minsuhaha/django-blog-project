@@ -218,9 +218,6 @@ class image_upload(View):
     
 # 답변등록 answer_create view (9/17 생성완료)
 def comment_create(request, post_id):
-    """
-    pybo 답변등록
-    """
     post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -235,10 +232,17 @@ def comment_create(request, post_id):
     return render(request, 'board_detail.html', context)
 
 
-def comment_delete(request,post_id, comment_id ):
+def comment_delete(request, comment_id ):
     comment = get_object_or_404(Comment, pk=comment_id)
-    comment.delete()
-    return redirect('board_detail', post_id)
+    if request.method == "POST":
+        comment.delete()
+        try:
+        # 삭제가 성공한 경우
+            return JsonResponse({'message': 'success'})
+        except Exception as e:
+        # 삭제 실패한 경우
+            return JsonResponse({'message': 'error'})
+
 
 # def comment_update(request,post_id, comment_id):
 #     comment = Comment.objects.get(id=comment_id)
