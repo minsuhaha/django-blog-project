@@ -17,12 +17,14 @@
 
 
 ## 프로젝트 피그마
+<img width="600" alt="image" src="https://github.com/minsuhaha/django-blog-project/assets/105342203/9875c7a4-2cad-4344-9f7f-d3a97aa297ab">
+
 [프로젝트 피그마 바로가기](https://www.figma.com/file/9GMksH05GZAejl3UewASNd/%EC%98%A4%EB%A5%B4%EB%AF%B8-2%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8(%EB%B8%94%EB%A1%9C%EA%B7%B8)-(Copy)?type=design&node-id=0-1&mode=design&t=CCql6XVRzchHDHFy-0)
 <br><br>
 
 
 ## 프로젝트 모델 erd
-<img width="555" alt="image" src="https://github.com/minsuhaha/django-blog-project/assets/105342203/09c46690-a98b-4940-8e37-0d90949d3992">
+<img width="600" alt="image" src="https://github.com/minsuhaha/django-blog-project/assets/105342203/09c46690-a98b-4940-8e37-0d90949d3992">
 <br><br>
 
 
